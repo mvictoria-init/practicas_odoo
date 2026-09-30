@@ -1,12 +1,14 @@
 # -*- coding: utf-8 -*-
+# Aquí va nuestro modelo
 
 from odoo import models, fields
 
 class Student (models.Model):
-    # Metadatos del módelo
+    # Metadatos del módelo para crear la tabla de estudiantes
     _name = 'school.student'
     _description = 'Tabla de estudiantes'
 
+    # Los datos de los estudiantes 
     name = fields.Char(string='Nombre', required=True)
     age = fields.Integer(string='Edad')
 

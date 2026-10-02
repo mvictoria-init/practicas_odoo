@@ -1,24 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-<!--
-        <template id="listing">
-          <ul>
-            <li t-foreach="objects" t-as="object">
-              <a t-attf-href="#{ root }/objects/#{ object.id }">
-                <t t-esc="object.display_name"/>
-              </a>
-            </li>
-          </ul>
-        </template>
-        <template id="object">
-          <h1><t t-esc="object.display_name"/></h1>
-          <dl>
-            <t t-foreach="object._fields" t-as="field">
-              <dt><t t-esc="field"/></dt>
-              <dd><t t-esc="object[field]"/></dd>
-            </t>
-          </dl>
-        </template>
--->
+        <!-- List View (Tree) -->
+        <record id="estateproperty_tree_view" model="ir.ui.view">
+            <field name="name">estateproperty.tree.view</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <tree>
+                    <field name="name"/> 
+                    <field name="postcode"/>
+                    <field name="bedrooms"/> 
+                    <field name="expected_price"/> 
+                    <field name="state"/> 
+                </tree>
+            </field>
+        </record>
+
+        <!-- Form View (Form) -->
+        <record id="view_estate_property_form" model="ir.ui.view">
+            <field name="name">estate.property.form</field>
+            <field name="model">estate.property</field>
+            <field name="arch" type="xml">
+                <form string="Propiedad">
+                    <!-- Header with status bar -->
+                    <header>
+                        <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold,canceled"/>
+                    </header>
+
+                    <!-- Main page -->
+                    <sheet>
+                        <div class="oe_title">
+                            <h1>
+                                <field name="name" placeholder="Nombre de la propiedad..."/>
+                            </h1>
+                        </div>
+
+                        <!-- Group blocks -->
+                        <group>
+                            <group string="Información General">
+                                <field name="description"/>
+                                <field name="postcode"/>
+                                <field name="date_availability"/>
+                            </group>
+                            <group string="Precios y Detalles">
+                                <field name="expected_price"/>
+                                <field name="selling_price"/>
+                                <field name="bedrooms"/>
+                            </group>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+         <!-- Window Action -->
+        <record id="estate_property_action" model="ir.actions.act_window">
+            <field name="name">Propiedades</field>
+            <field name="res_model">estate.property</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+              <p class="o_view_nocontent_smiling_face">
+                  ¡Crea tu primera propiedad!
+              </p>
+          </field>
+        </record>
+
+        <!-- Menus -->
+        <!-- Menu root -->
+        <menuitem id="menu_root" name="Inmobiliaria"/>
+        <!-- Submenu: Propiedades -->
+        <menuitem id="menu_estate_property" name="Propiedades" parent="menu_root"/>
+        <!-- Final action: Todas las Propiedades -->
+        <menuitem id="menu_estate_property_list" name="Todas las Propiedades" parent="menu_estate_property" action="estate_property_action"/>
     </data>
 </odoo>

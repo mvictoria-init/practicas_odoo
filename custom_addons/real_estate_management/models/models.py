@@ -11,28 +11,22 @@ class EstateProperty(models.Model):
 
     # Basic fields about property
     name = fields.Char( string='Nombre', required=True )
-
     description = fields.Text( string='Descripción')
-
     postcode = fields.Char( string='Código Postal' )
-
     date_availability = fields.Date( string='Disponible desde', default=fields.Date.today )
-
     expected_price = fields.Float( string='Precio Esperado', required=True )
-
     selling_price = fields.Float( string='Precio de Venta', readonly=True )
-
     bedrooms = fields.Integer( string='Habitaciones', default=2 )
 
     state = fields.Selection(
         selection=[
             ('new', 'Nuevo'),
-            ('offer_received', 'Oferta Recibida'),
+            ('offer_received', 'Oferta Recibida'), 
             ('offer_accepted', 'Oferta Aceptada'),
             ('sold', 'Vendido'),
             ('canceled', 'Cancelado'),
         ],
-        string='Estado', default='new',required=True,
+        string='Estado', default='new', required=True,
     )
 
     # Price validation

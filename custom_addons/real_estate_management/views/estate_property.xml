@@ -2,7 +2,7 @@
 <odoo>
     <data>
         <!-- List View (Tree) -->
-        <record id="estateproperty_tree_view" model="ir.ui.view">
+        <record id="view_estate_property_tree" model="ir.ui.view">
             <field name="name">estateproperty.tree.view</field>
             <field name="model">estate.property</field>
             <field name="arch" type="xml">
@@ -72,5 +72,6 @@
         <menuitem id="menu_estate_property" name="Propiedades" parent="menu_root"/>
         <!-- Final action: Todas las Propiedades -->
         <menuitem id="menu_estate_property_list" name="Todas las Propiedades" parent="menu_estate_property" action="estate_property_action"/>
+    
     </data>
 </odoo>

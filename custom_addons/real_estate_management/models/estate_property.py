@@ -30,11 +30,16 @@ class EstateProperty(models.Model):
     )
 
     living_area = fields.Float( string='Superficie (m2)' )
-    
     property_type_id = fields.Many2one( 'estate.property.type', string='Tipo' )
-
     price_per_sqm = fields.Float( string='Precio por m2', compute='_compute_price_per_sqm', store=True )
     # store=True - Optional: Save the value in the database to allow sorting/filtering
+
+    # Price validation
+    @api.constrains('expected_price')
+    def _check_expected_price(self):
+        for record in self:
+            if record.expected_price <= 0:
+                raise ValidationError('El precio esperado debe ser mayor que 0.')
 
     # Compute price for m**2
     @api.depends('expected_price', 'living_area')
@@ -44,10 +49,3 @@ class EstateProperty(models.Model):
                 record.price_per_sqm = record.expected_price / record.living_area
             else:
                 record.price_per_sqm = 0.0
-
-    # Price validation
-    @api.constrains('expected_price')
-    def _check_expected_price(self):
-        for record in self:
-            if record.expected_price <= 0:
-                raise ValidationError('El precio esperado debe ser mayor que 0.')

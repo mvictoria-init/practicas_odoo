@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        
         <!-- List View (Tree) -->
         <record id="view_estate_property_type_tree" model="ir.ui.view">
-            <field name="name">estatepropertytype.tree.view</field>
+            <field name="name">estate.property.type.tree.view</field>
             <field name="model">estate.property.type</field>
             <field name="arch" type="xml">
                 <tree string="Tipos de Propiedad" editable="bottom">
@@ -14,7 +15,7 @@
 
         <!-- Form View (Form) -->
         <record id="view_estate_property_type_form" model="ir.ui.view">
-            <field name="name">estatepropertytype.form</field>
+            <field name="name">estate.property.type.form</field>
             <field name="model">estate.property.type</field>
             <field name="arch" type="xml">
                 <form string="Tipo de Propiedad">
@@ -35,10 +36,11 @@
         </record>
 
         <!-- Menu -->
-        <menuitem id="menu_estate_property_type" 
-            name="Tipos de Propiedades" 
-            parent="menu_estate_property"
-            action="estate_property_type_action"
-            sequence="20"/>
+        <menuitem id="menu_estate_property_type"
+          name="Tipos de Propiedades"
+          parent="menu_estate_property"
+          action="estate_property_type_action"
+          sequence="20"/>
+        
     </data>
 </odoo>

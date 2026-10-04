@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+
         <!-- List View (Tree) -->
         <record id="view_estate_property_tree" model="ir.ui.view">
-            <field name="name">estateproperty.tree.view</field>
+            <field name="name">estate.property.tree</field>
             <field name="model">estate.property</field>
             <field name="arch" type="xml">
-                <tree>
-                    <field name="name"/> 
-                    <field name="postcode"/>
-                    <field name="bedrooms"/> 
-                    <field name="expected_price"/> 
-                    <field name="state"/> 
+                <tree string="Propiedades">
+                    <field name="name"/>
+                    <field name="property_type_id"/>
+                    <field name="expected_price"/>
+                    <field name="state"/>
                 </tree>
             </field>
         </record>
@@ -22,22 +22,16 @@
             <field name="model">estate.property</field>
             <field name="arch" type="xml">
                 <form string="Propiedad">
-                    <!-- Header with status bar -->
                     <header>
                         <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold,canceled"/>
                     </header>
-
-                    <!-- Main page -->
                     <sheet>
                         <div class="oe_title">
-                            <h1>
-                                <field name="name" placeholder="Nombre de la propiedad..."/>
-                            </h1>
+                            <h1><field name="name" placeholder="Nombre de la propiedad..."/></h1>
                         </div>
-
-                        <!-- Group blocks -->
                         <group>
                             <group string="Información General">
+                                <field name="property_type_id"/>
                                 <field name="description"/>
                                 <field name="postcode"/>
                                 <field name="date_availability"/>
@@ -45,6 +39,8 @@
                             <group string="Precios y Detalles">
                                 <field name="expected_price"/>
                                 <field name="selling_price"/>
+                                <field name="living_area"/>
+                                <field name="price_per_sqm"/>
                                 <field name="bedrooms"/>
                             </group>
                         </group>
@@ -53,25 +49,25 @@
             </field>
         </record>
 
-         <!-- Window Action -->
+        <!-- Window Action -->
         <record id="estate_property_action" model="ir.actions.act_window">
             <field name="name">Propiedades</field>
             <field name="res_model">estate.property</field>
             <field name="view_mode">tree,form</field>
             <field name="help" type="html">
-              <p class="o_view_nocontent_smiling_face">
-                  ¡Crea tu primera propiedad!
-              </p>
-          </field>
+                <p class="o_view_nocontent_smiling_face">
+                    ¡Crea tu primera propiedad!
+                </p>
+            </field>
         </record>
 
-        <!-- Menus -->
-        <!-- Menu root -->
-        <menuitem id="menu_root" name="Inmobiliaria"/>
-        <!-- Submenu: Propiedades -->
-        <menuitem id="menu_estate_property" name="Propiedades" parent="menu_root"/>
-        <!-- Final action: Todas las Propiedades -->
-        <menuitem id="menu_estate_property_list" name="Todas las Propiedades" parent="menu_estate_property" action="estate_property_action"/>
-    
+        <!-- MENÚS -->
+        <menuitem id="menu_estate_root" name="Inmobiliaria" sequence="10"/>
+        <menuitem id="menu_estate_property" name="Propiedades" parent="menu_estate_root" sequence="10"/>
+        <menuitem id="menu_estate_property_all" 
+                  name="Todas las Propiedades" 
+                  parent="menu_estate_property" 
+                  action="estate_property_action" 
+                  sequence="10"/>
     </data>
 </odoo>

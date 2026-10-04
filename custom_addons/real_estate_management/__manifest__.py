@@ -11,10 +11,6 @@
 
     'author': "Maria Victoria",
     'website': "https://my-portfolio-flame-six-94.vercel.app/",
-
-    # Categories can be used to filter modules in modules listing
-    # Check https://github.com/odoo/odoo/blob/15.0/odoo/addons/base/data/ir_module_category_data.xml
-    # for the full list
     'category': 'management',
     'version': '0.1',
 
@@ -24,14 +20,11 @@
     # always loaded
     'data': [
         'security/ir.model.access.csv',
-        'views/views.xml',
-        'views/estate_property.xml',
-        'views/estate_property_type.xml'
+        'views/estate_property.xml',       # Aquí está menu_estate_root y menu_estate_property
+        'views/estate_property_type.xml',  # Aquí está menu_estate_property_type con parent
     ],
-    # only loaded in demonstration mode
-    'demo': [
-        'demo/demo.xml',
-    ],
+
+
     # Is application
     'application': True,
 }

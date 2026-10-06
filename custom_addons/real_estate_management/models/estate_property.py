@@ -54,3 +54,33 @@ class EstateProperty(models.Model):
                 record.price_per_sqm = record.expected_price / record.living_area
             else:
                 record.price_per_sqm = 0.0
+
+    # Businnes methods (State Changes)
+    def action_offer_received(self):
+        """Cambia el estado a 'Oferta Recibida'."""
+        for record in self:
+            record.state = 'offer_received'
+
+    def action_offer_accepted(self):
+        """Cambia el estado a 'Oferta Aceptada'."""
+        for record in self:
+            record.state = 'offer_accepted'
+
+    def action_sold(self):
+        """Marca la propiedad como vendida."""
+        for record in self:
+            if record.state == 'canceled':
+                raise ValidationError('No puedes vender una propiedad cancelada.')
+            record.state = 'sold'
+
+    def action_cancel(self):
+        """Cancela la propiedad."""
+        for record in self:
+            if record.state == 'sold':
+                raise ValidationError('No puedes cancelar una propiedad ya vendida.')
+            record.state = 'canceled'
+
+    def action_reset_to_new(self):
+        """Devuelve la propiedad al estado 'Nuevo'."""
+        for record in self:
+            record.state = 'new'

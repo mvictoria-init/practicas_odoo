@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
-        <!-- VISTA DE LISTA (TREE) -->
+        <!-- List View (Tree) -->
         <record id="view_estate_property_tree" model="ir.ui.view">
             <field name="name">estate.property.tree</field>
             <field name="model">estate.property</field>
@@ -15,7 +15,7 @@
             </field>
         </record>
 
-        <!-- VISTA KANBAN -->
+        <!-- Kanban View -->
         <record id="view_estate_property_kanban" model="ir.ui.view">
             <field name="name">estate.property.kanban</field>
             <field name="model">estate.property</field>
@@ -29,7 +29,11 @@
 
                     <templates>
                         <t t-name="kanban-box">
-                            <div class="oe_kanban_global_click">
+                            <div t-attf-class="oe_kanban_global_click
+                                #{state === 'sold' ? 'border-start border-success border-4' : ''}
+                                #{state === 'canceled' ? 'border-start border-danger border-4' : ''}
+                                #{state === 'offer_accepted' ? 'border-start border-info border-4' : ''}
+                                #{state === 'offer_received' ? 'border-start border-warning border-4' : ''}">
                                 <div class="o_kanban_record_top">
                                     <div class="o_kanban_record_headings">
                                         <strong class="o_kanban_record_title">
@@ -59,14 +63,49 @@
             </field>
         </record>
 
-        <!-- VISTA DE FORMULARIO (FORM) -->
+        <!-- Form View (Form) -->
         <record id="view_estate_property_form" model="ir.ui.view">
             <field name="name">estate.property.form</field>
             <field name="model">estate.property</field>
             <field name="arch" type="xml">
                 <form string="Propiedad">
                     <header>
-                        <field name="state" widget="statusbar" statusbar_visible="new,offer_received,offer_accepted,sold,canceled"/>
+                        <!-- Button: Confirm offer received (visible only in "new" state) -->
+                        <button name="action_offer_received"
+                                type="object"
+                                string="Oferta Recibida"
+                                class="oe_highlight"
+                                invisible="state != 'new'"/>
+
+                        <!-- Button: Accept offer (visible only in "offer received" state) -->
+                        <button name="action_offer_accepted"
+                                type="object"
+                                string="Aceptar Oferta"
+                                class="oe_highlight"
+                                invisible="state != 'offer_received'"/>
+
+                        <!-- Button: Sell (visible only in "offer accepted" state) -->
+                        <button name="action_sold"
+                                type="object"
+                                string="Vender"
+                                class="oe_highlight"
+                                invisible="state != 'offer_accepted'"/>
+
+                        <!-- Button: Cancel (visible in any state except sold/canceled) -->
+                        <button name="action_cancel"
+                                type="object"
+                                string="Cancelar"
+                                invisible="state in ('sold', 'canceled')"/>
+
+                        <!-- Button: Reset (visible only in canceled state) -->
+                        <button name="action_reset_to_new"
+                                type="object"
+                                string="Reabrir"
+                                invisible="state != 'canceled'"/>
+
+                        <!-- Status bar (the one you already have) -->
+                        <field name="state" widget="statusbar"
+                            statusbar_visible="new,offer_received,offer_accepted,sold,canceled"/>
                     </header>
                     <sheet>
                         <div class="oe_title">
@@ -93,7 +132,7 @@
             </field>
         </record>
 
-        <!-- VISTA DE BÚSQUEDA (SEARCH) -->
+        <!-- Search view -->
         <record id="view_estate_property_search" model="ir.ui.view">
             <field name="name">estate.property.search</field>
             <field name="model">estate.property</field>
@@ -123,7 +162,7 @@
             </field>
         </record>
 
-        <!-- ACCIÓN DE VENTANA -->
+        <!-- Window Action -->
         <record id="estate_property_action" model="ir.actions.act_window">
             <field name="name">Propiedades</field>
             <field name="res_model">estate.property</field>
@@ -135,7 +174,7 @@
             </field>
         </record>
 
-        <!-- MENÚS -->
+        <!-- Menus -->
         <menuitem id="menu_estate_root" name="Inmobiliaria" sequence="10"/>
         <menuitem id="menu_estate_property" name="Propiedades" parent="menu_estate_root" sequence="10"/>
         <menuitem id="menu_estate_property_all"

@@ -34,6 +34,11 @@ class EstateProperty(models.Model):
     price_per_sqm = fields.Float( string='Precio por m2', compute='_compute_price_per_sqm', store=True )
     # store=True - Optional: Save the value in the database to allow sorting/filtering
 
+    currency_id = fields.Many2one(
+    'res.currency',
+    string='Moneda',
+    default=lambda self: self.env.company.currency_id)
+
     # Price validation
     @api.constrains('expected_price')
     def _check_expected_price(self):

@@ -70,3 +70,15 @@ Diseñado como proyecto de aprendizaje práctico siguiendo las convenciones ofic
 ```bash
 git clone https://github.com/mvictoria-init/practicas_odoo.git
 cd real_estate_management
+
+## Capturas del proyecto
+
+![alt text](image.png)
+
+![alt text](image-1.png)
+
+![alt text](image-4.png)
+
+![alt text](image-2.png)
+
+![alt text](image-3.png)
